@@ -1,12 +1,17 @@
-//create web server using express
-const express = require('express');
-const app = express();
-const port = 3000;
+// Create web server
+const http = require('http');
+const skillsMember = require('./member');
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+const server = http.createServer((req, res) => {
+  if (req.url === '/skills') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end(skillsMember());
+  } else {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('Not Found');
+  }
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+server.listen(3000, () => {
+  console.log('Server running at http://localhost:3000/');
 });
